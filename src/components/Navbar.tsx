@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { Logo } from './Logo';
 import { Menu, X } from 'lucide-react';
 
@@ -62,7 +63,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-[#ece8df]/80 transition-shadow">
+    <motion.header 
+      initial={{ opacity: 0, y: -25 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="sticky top-0 z-40 bg-white border-b border-[#ece8df]/80 transition-shadow"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-1 sm:py-1.5 flex items-center justify-between">
         {/* Brand */}
         <a 
@@ -153,7 +159,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
       )}
-    </header>
+    </motion.header>
   );
 };
 

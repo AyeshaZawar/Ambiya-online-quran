@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 
 export const HowWeTeachSection: React.FC = () => {
   const cards = [
@@ -26,23 +27,34 @@ export const HowWeTeachSection: React.FC = () => {
   ];
 
   return (
-    <section id="how-we-teach" className="py-16 md:py-20 border-t border-[#ece6dc]/60">
+    <section id="how-we-teach" className="py-16 md:py-20 border-t border-[#ece6dc]/60 overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="mb-10 sm:mb-12">
+        {/* Section Header - Up to Down */}
+        <motion.div 
+          initial={{ opacity: 0, y: -25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.65, ease: 'easeOut' }}
+          className="mb-10 sm:mb-12"
+        >
           <span className="text-[12px] sm:text-[13px] tracking-[0.16em] uppercase font-bold text-[#b28338] mb-3 block">
             Our Approach
           </span>
           <h2 className="font-serif text-[34px] sm:text-[40px] leading-[1.2] text-[#11382b] font-normal tracking-[-0.01em]">
             How We Teach
           </h2>
-        </div>
+        </motion.div>
 
-        {/* 4 Cards Grid */}
+        {/* 4 Cards Grid - Animated Left to Right */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {cards.map((card, idx) => (
-            <div
+            <motion.div
               key={idx}
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.6, delay: 0.12 + idx * 0.12, ease: 'easeOut' }}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
               className="bg-white rounded-xl p-7 border border-[#eae5dc] shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
             >
               <div>
@@ -81,10 +93,11 @@ export const HowWeTeachSection: React.FC = () => {
                   {card.description}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
     </section>
   );
 };
+

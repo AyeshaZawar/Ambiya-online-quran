@@ -18,22 +18,22 @@ export const Logo: React.FC<LogoProps> = ({
 
   // Enlarged logo height mapping for high visibility and clear legibility
   const heightClass = size === 'sm' 
-    ? 'h-12 sm:h-14 max-w-[280px] sm:max-w-[360px]' 
+    ? 'h-11 sm:h-13 max-w-[260px] sm:max-w-[320px]' 
     : size === 'lg' 
-    ? 'h-18 sm:h-22 md:h-24 max-w-[420px] sm:max-w-[540px]' 
+    ? 'h-14 sm:h-16 md:h-18 max-w-[320px] sm:max-w-[380px]' 
     : 'h-16 sm:h-20 md:h-[76px] lg:h-[82px] max-w-[360px] sm:max-w-[460px] md:max-w-[540px]';
 
   // Use transparent light logo (white & gold) for dark backgrounds, and standard logo (emerald & gold) for light backgrounds
   const logoSrc = isLight ? '/images/logo-light.png' : '/images/logo.png';
 
   return (
-    <div className={`flex items-center select-none ${className}`}>
+    <div className={`flex items-center select-none max-w-full ${className}`}>
       {!imgError ? (
         <img
           src={logoSrc}
           alt="Adam to Muhammad Online Quran Academy"
           onError={() => setImgError(true)}
-          className={`${heightClass} w-auto object-contain transition-all`}
+          className={`${heightClass} w-auto max-w-full object-contain transition-all shrink-0`}
         />
       ) : (
         /* Fallback if image fails to load */
