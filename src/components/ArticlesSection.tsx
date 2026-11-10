@@ -15,7 +15,7 @@ export const ARTICLES_DATA: ArticleItem[] = [
     id: 'adult-beginner',
     title: 'Starting Your Quran Journey as an Adult Beginner',
     excerpt: 'As an adult, he was learning how to read the Quran — practical encouragement for anyone beginning their journey.',
-    image: '/src/assets/images/adult_man_quran_study_1793997584250.jpg',
+    image: '/images/adult_man_quran_study.jpg',
     gradient: 'linear-gradient(135deg, rgba(164, 130, 57, 0.85) 0%, rgba(93, 117, 67, 0.8) 50%, rgba(30, 73, 58, 0.9) 100%)',
     readTime: '4 min read',
     content: [
@@ -28,7 +28,7 @@ export const ARTICLES_DATA: ArticleItem[] = [
     id: 'prayer-daily-life',
     title: 'Why Prayer Remains Central to Daily Life',
     excerpt: 'A short reflection on how regular prayer shapes mindfulness and connection.',
-    image: '/src/assets/images/prayer_daily_life_1793993793621.jpg',
+    image: '/images/prayer_daily_life.jpg',
     gradient: 'linear-gradient(135deg, rgba(151, 125, 59, 0.85) 0%, rgba(79, 106, 68, 0.8) 50%, rgba(25, 68, 54, 0.9) 100%)',
     readTime: '5 min read',
     content: [
@@ -41,7 +41,7 @@ export const ARTICLES_DATA: ArticleItem[] = [
     id: 'understanding-eid',
     title: 'Understanding Eid al-Adha',
     excerpt: 'The story and traditions behind the Festival of Sacrifice, explained simply.',
-    image: '/src/assets/images/eid_al_adha_1793993793790.jpg',
+    image: '/images/eid_al_adha.jpg',
     gradient: 'linear-gradient(135deg, rgba(171, 138, 63, 0.85) 0%, rgba(96, 121, 71, 0.8) 50%, rgba(30, 76, 61, 0.9) 100%)',
     readTime: '4 min read',
     content: [

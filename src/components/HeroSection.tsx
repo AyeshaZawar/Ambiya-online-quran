@@ -76,7 +76,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenTrial }) => {
             >
               {/* Background Photography Asset - Unobstructed & Professional */}
               <img
-                src="/src/assets/images/hero_quran_academy_1793997586230.jpg"
+                src="/images/hero_quran_academy.jpg"
                 alt="Online Quran study session with open Quran and tajweed lessons"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"

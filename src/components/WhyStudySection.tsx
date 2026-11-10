@@ -51,7 +51,7 @@ export const WhyStudySection: React.FC<WhyStudySectionProps> = ({ onOpenTrial })
             >
               {/* Background Photography Asset - Student learning Quran from home */}
               <img
-                src="/src/assets/images/student_home_learning_1793998653701.jpg"
+                src="/images/student_home_learning.jpg"
                 alt="Student learning Quran from the comfort of home with online tutor"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
