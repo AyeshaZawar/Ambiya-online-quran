@@ -17,17 +17,17 @@ export const WhyStudySection: React.FC<WhyStudySectionProps> = ({ onOpenTrial })
             </span>
 
             {/* Main Headline */}
-            <h2 className="font-serif text-[34px] sm:text-[40px] md:text-[44px] leading-[1.2] text-[#11382b] font-normal tracking-[-0.01em] mb-6 text-balance">
+            <h2 className="font-serif text-[28px] xs:text-[32px] sm:text-[38px] md:text-[44px] leading-[1.2] text-[#11382b] font-normal tracking-[-0.01em] mb-5 sm:mb-6 text-balance">
               A Quran School Built Around Your Schedule
             </h2>
 
             {/* Paragraph 1 */}
-            <p className="text-[16px] leading-relaxed text-[#4f5953] mb-4 font-normal">
+            <p className="text-[15px] sm:text-[16px] leading-relaxed text-[#4f5953] mb-4 font-normal">
               Our tutors guide students of every background through clear, structured lessons in Quran reading, tajweed, and memorization — all from the comfort of home.
             </p>
 
             {/* Paragraph 2 */}
-            <p className="text-[16px] leading-relaxed text-[#4f5953] mb-8 font-normal">
+            <p className="text-[15px] sm:text-[16px] leading-relaxed text-[#4f5953] mb-7 sm:mb-8 font-normal">
               Whether your child is just starting with the Qaida or you're an adult returning to the Quran after years away, our curriculum adapts to where you are and helps you build steady, lasting progress.
             </p>
 
@@ -35,7 +35,7 @@ export const WhyStudySection: React.FC<WhyStudySectionProps> = ({ onOpenTrial })
             <button
               type="button"
               onClick={onOpenTrial}
-              className="px-6 py-3.5 rounded-lg bg-[#184c3c] hover:bg-[#123b2e] text-white text-[15px] font-medium transition-all shadow-xs hover:shadow-md cursor-pointer whitespace-nowrap"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-[#184c3c] hover:bg-[#123b2e] text-white text-[15px] font-medium transition-all shadow-xs hover:shadow-md cursor-pointer whitespace-nowrap text-center"
             >
               Begin Your Free Week
             </button>

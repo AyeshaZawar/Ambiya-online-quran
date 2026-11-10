@@ -1,15 +1,40 @@
 import React from 'react';
+import { Logo } from './Logo';
 
 interface FooterProps {
   onOpenTrial: () => void;
+  onNavigateAbout?: () => void;
+  onNavigateHome?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenTrial }) => {
+export const Footer: React.FC<FooterProps> = ({ 
+  onOpenTrial,
+  onNavigateAbout,
+  onNavigateHome,
+}) => {
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
-    const elem = document.querySelector(id);
-    if (elem) {
-      elem.scrollIntoView({ behavior: 'smooth' });
+    if (onNavigateHome) {
+      onNavigateHome();
+      setTimeout(() => {
+        const elem = document.querySelector(id);
+        if (elem) {
+          elem.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 50);
+    } else {
+      const elem = document.querySelector(id);
+      if (elem) {
+        elem.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const handleAboutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (onNavigateAbout) {
+      onNavigateAbout();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -19,12 +44,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTrial }) => {
         {/* 4 Columns */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
           {/* Column 1: Brand Info */}
-          <div>
-            <h3 className="text-white font-semibold text-[16px] mb-4">
-              Anbiya Online Quran
-            </h3>
+          <div className="space-y-4">
+            <div className="inline-block py-1">
+              <Logo variant="light" size="lg" />
+            </div>
             <p className="text-[#9fb5a9] text-[14px] leading-relaxed">
-              Quran courses for kids and adults, taught live, one-on-one.
+              Online one-to-one Quran classes for kids and adults worldwide, taught with patience and care.
             </p>
           </div>
 
@@ -37,17 +62,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTrial }) => {
               <li>
                 <a 
                   href="#about" 
-                  onClick={(e) => handleScroll(e, '#about')}
-                  className="hover:text-white transition-colors"
+                  onClick={handleAboutClick}
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
-                  About
+                  About Us
                 </a>
               </li>
               <li>
                 <a 
                   href="#how-we-teach" 
                   onClick={(e) => handleScroll(e, '#how-we-teach')}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   How We Teach
                 </a>
@@ -56,7 +81,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTrial }) => {
                 <a 
                   href="#testimonials" 
                   onClick={(e) => handleScroll(e, '#testimonials')}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   Testimonials
                 </a>
@@ -74,7 +99,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTrial }) => {
                 <a 
                   href="#articles" 
                   onClick={(e) => handleScroll(e, '#articles')}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   Articles
                 </a>
@@ -83,7 +108,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTrial }) => {
                 <a 
                   href="#fees" 
                   onClick={(e) => handleScroll(e, '#fees')}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   Fees
                 </a>
@@ -123,10 +148,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenTrial }) => {
         {/* Separator Line & Copyright */}
         <div className="border-t border-[#143628] pt-8 text-center">
           <p className="text-[#8ba699] text-[13px]">
-            © Anbiya Online Quran. All rights reserved.
+            © Adam to Muhammad Online Quran Academy. All rights reserved.
           </p>
         </div>
       </div>
     </footer>
   );
 };
+

@@ -28,23 +28,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenTrial }) => {
             </span>
 
             {/* Main Headline */}
-            <h1 className="font-serif text-[38px] sm:text-[46px] md:text-[54px] lg:text-[56px] leading-[1.14] text-[#11382b] font-normal tracking-[-0.01em] mb-6 text-balance">
+            <h1 className="font-serif text-[30px] xs:text-[34px] sm:text-[44px] md:text-[52px] lg:text-[56px] leading-[1.16] text-[#11382b] font-normal tracking-[-0.01em] mb-5 sm:mb-6 text-balance">
               Learn the Quran with Tajweed, from the Comfort of Home
             </h1>
 
             {/* Subtitle */}
-            <p className="text-[16px] sm:text-[17px] leading-relaxed text-[#4f5953] max-w-xl mb-8 font-normal">
+            <p className="text-[15px] sm:text-[17px] leading-relaxed text-[#4f5953] max-w-xl mb-7 sm:mb-8 font-normal">
               One-on-one lessons with qualified, patient tutors — flexible scheduling for students of every age and level, anywhere in the world.
             </p>
 
             {/* Numbered Steps */}
-            <div className="space-y-4 mb-9 w-full max-w-lg">
+            <div className="space-y-3.5 sm:space-y-4 mb-8 sm:mb-9 w-full max-w-lg">
               {steps.map((stepText, idx) => (
-                <div key={idx} className="flex items-center gap-4">
+                <div key={idx} className="flex items-center gap-3.5 sm:gap-4">
                   <div className="w-7 h-7 rounded-full bg-[#11382b] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
                     {idx + 1}
                   </div>
-                  <span className="text-[15px] sm:text-[15.5px] font-medium text-[#25332c]">
+                  <span className="text-[14.5px] sm:text-[15.5px] font-medium text-[#25332c]">
                     {stepText}
                   </span>
                 </div>
@@ -52,15 +52,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenTrial }) => {
             </div>
 
             {/* Action Row */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 pt-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-6 pt-1 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={onOpenTrial}
-                className="px-7 py-3.5 rounded-lg bg-[#184c3c] hover:bg-[#123b2e] text-white text-[15px] font-medium transition-all shadow-xs hover:shadow-md cursor-pointer whitespace-nowrap"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-lg bg-[#184c3c] hover:bg-[#123b2e] text-white text-[15px] font-medium transition-all shadow-xs hover:shadow-md cursor-pointer whitespace-nowrap text-center"
               >
                 Start Free Trial
               </button>
-              <span className="text-[13.5px] text-[#6b756f] font-normal">
+              <span className="text-[13px] sm:text-[13.5px] text-[#6b756f] font-normal text-center sm:text-left">
                 No credit card or payment required
               </span>
             </div>

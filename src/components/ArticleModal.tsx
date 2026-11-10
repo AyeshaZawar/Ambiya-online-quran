@@ -38,7 +38,7 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({ article, onClose }) 
 
             <span className="inline-flex items-center gap-1 text-xs text-[#dfc588] bg-black/40 border border-[#dfc588]/30 px-3 py-1 rounded-full backdrop-blur-xs">
               <BookOpen className="w-3.5 h-3.5" />
-              Anbiya Educational Reflections
+              Adam to Muhammad Reflections
             </span>
           </div>
 
@@ -70,7 +70,7 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({ article, onClose }) 
 
           <div className="pt-6 border-t border-[#ece7de] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <span className="text-xs text-[#7d8780]">
-              Published by Anbiya Online Quran Educational Team
+              Published by Adam to Muhammad Online Quran Academy Educational Team
             </span>
             <button
               type="button"
