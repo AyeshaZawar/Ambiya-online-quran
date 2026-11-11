@@ -135,7 +135,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenTrial, onNavigat
                         Email Support
                       </p>
                       <p className="text-sm text-[#4f5953] mt-0.5">
-                        Prompt response within 24 hours for all curriculum and schedule requests.
+                        Response within 24 hours for any questions or concerns.
                       </p>
                     </div>
                   </div>

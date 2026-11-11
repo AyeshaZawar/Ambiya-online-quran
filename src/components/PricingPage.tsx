@@ -59,6 +59,22 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onOpenTrial, onNavigat
       ],
       description: 'Best for students aiming to complete Qaida quickly or master fluent recitation with Tajweed.',
     },
+    {
+      id: 'plan-6days',
+      title: '6 Days / Week',
+      subtitle: 'Complete Mastery & Hifz',
+      sessions: '24 Sessions per Month',
+      popular: false,
+      features: [
+        '1-to-1 dedicated senior tutor',
+        '30-45 minutes per class',
+        'Continuous 6-day practice with Sunday off',
+        'Intensive Tajweed & Hifz memorization',
+        'Weekly evaluations & progress reports',
+        '100% Free 1-Week Trial included',
+      ],
+      description: 'Ideal for dedicated learners seeking rapid fluency, complete Qaida graduation, or active Hifz.',
+    },
   ];
 
   return (
@@ -120,10 +136,10 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onOpenTrial, onNavigat
         </div>
       </section>
 
-      {/* 3 Pricing Plans Grid */}
+      {/* 4 Pricing Plans Grid */}
       <section className="py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {plans.map((plan, idx) => (
               <motion.div
                 key={plan.id}
