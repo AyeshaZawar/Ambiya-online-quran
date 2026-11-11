@@ -1,42 +1,20 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Logo } from './Logo';
+import { ViewState } from './Navbar';
 
 interface FooterProps {
   onOpenTrial: () => void;
-  onNavigateAbout?: () => void;
-  onNavigateHome?: () => void;
+  onNavigate: (view: ViewState) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ 
   onOpenTrial,
-  onNavigateAbout,
-  onNavigateHome,
+  onNavigate,
 }) => {
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, view: ViewState) => {
     e.preventDefault();
-    if (onNavigateHome) {
-      onNavigateHome();
-      setTimeout(() => {
-        const elem = document.querySelector(id);
-        if (elem) {
-          elem.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 50);
-    } else {
-      const elem = document.querySelector(id);
-      if (elem) {
-        elem.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
-  const handleAboutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    if (onNavigateAbout) {
-      onNavigateAbout();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    onNavigate(view);
   };
 
   return (
@@ -46,10 +24,10 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 mb-14 items-start">
           {/* Column 1: Brand Info & Logo (Spans 5 columns on desktop, 2 on tablet) */}
           <motion.div 
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.65, ease: 'easeOut' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
             className="sm:col-span-2 lg:col-span-5 space-y-4 pr-0 lg:pr-6"
           >
             <div className="inline-block py-1 max-w-full overflow-hidden">
@@ -60,12 +38,12 @@ export const Footer: React.FC<FooterProps> = ({
             </p>
           </motion.div>
 
-          {/* Column 2: Explore (Spans 2 columns on desktop) */}
+          {/* Column 2: Explore */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.65, delay: 0.15, ease: 'easeOut' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
             className="lg:col-span-2"
           >
             <h3 className="text-white font-semibold text-[15px] mb-4">
@@ -74,8 +52,17 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2.5 text-[14px] text-[#9fb5a9]">
               <li>
                 <a 
+                  href="#home" 
+                  onClick={(e) => handleNavClick(e, 'home')}
+                  className="hover:text-white transition-colors cursor-pointer inline-block"
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a 
                   href="#about" 
-                  onClick={handleAboutClick}
+                  onClick={(e) => handleNavClick(e, 'about')}
                   className="hover:text-white transition-colors cursor-pointer inline-block"
                 >
                   About Us
@@ -83,31 +70,22 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a 
-                  href="#how-we-teach" 
-                  onClick={(e) => handleScroll(e, '#how-we-teach')}
+                  href="#courses" 
+                  onClick={(e) => handleNavClick(e, 'courses')}
                   className="hover:text-white transition-colors cursor-pointer inline-block"
                 >
-                  How We Teach
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#testimonials" 
-                  onClick={(e) => handleScroll(e, '#testimonials')}
-                  className="hover:text-white transition-colors cursor-pointer inline-block"
-                >
-                  Testimonials
+                  Courses
                 </a>
               </li>
             </ul>
           </motion.div>
 
-          {/* Column 3: Resources (Spans 2 columns on desktop) */}
+          {/* Column 3: Resources */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.65, delay: 0.25, ease: 'easeOut' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.18, ease: 'easeOut' }}
             className="lg:col-span-2"
           >
             <h3 className="text-white font-semibold text-[15px] mb-4">
@@ -116,20 +94,20 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2.5 text-[14px] text-[#9fb5a9]">
               <li>
                 <a 
-                  href="#articles" 
-                  onClick={(e) => handleScroll(e, '#articles')}
+                  href="#pricing" 
+                  onClick={(e) => handleNavClick(e, 'pricing')}
                   className="hover:text-white transition-colors cursor-pointer inline-block"
                 >
-                  Articles
+                  Pricing
                 </a>
               </li>
               <li>
                 <a 
-                  href="#fees" 
-                  onClick={(e) => handleScroll(e, '#fees')}
+                  href="#blog" 
+                  onClick={(e) => handleNavClick(e, 'blog')}
                   className="hover:text-white transition-colors cursor-pointer inline-block"
                 >
-                  Fees
+                  Blog Articles
                 </a>
               </li>
               <li>
@@ -138,18 +116,18 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={onOpenTrial}
                   className="hover:text-white transition-colors cursor-pointer text-left inline-block"
                 >
-                  Free Trial
+                  Free Trial Week
                 </button>
               </li>
             </ul>
           </motion.div>
 
-          {/* Column 4: Contact (Spans 3 columns on desktop) */}
+          {/* Column 4: Contact */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.65, delay: 0.35, ease: 'easeOut' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.25, ease: 'easeOut' }}
             className="sm:col-span-2 lg:col-span-3"
           >
             <h3 className="text-white font-semibold text-[15px] mb-4">
@@ -158,12 +136,21 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2.5 text-[14px] text-[#9fb5a9]">
               <li>Available worldwide, online</li>
               <li>
+                <a 
+                  href="#contact" 
+                  onClick={(e) => handleNavClick(e, 'contact')}
+                  className="hover:text-white transition-colors cursor-pointer inline-block"
+                >
+                  Contact Page
+                </a>
+              </li>
+              <li>
                 <button
                   type="button"
                   onClick={onOpenTrial}
                   className="hover:text-white transition-colors cursor-pointer text-left underline underline-offset-4"
                 >
-                  Register today
+                  Register for Free Trial
                 </button>
               </li>
             </ul>
@@ -180,4 +167,3 @@ export const Footer: React.FC<FooterProps> = ({
     </footer>
   );
 };
-

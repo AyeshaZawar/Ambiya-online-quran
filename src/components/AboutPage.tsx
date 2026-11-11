@@ -244,10 +244,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenTrial, onNavigateHom
               return (
                 <motion.div
                   key={course.title}
-                  initial={{ opacity: 0, x: -60 }}
+                  initial={{ opacity: 0, x: idx < 2 ? -40 : 40 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.6, delay: 0.12 + idx * 0.12, ease: 'easeOut' }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: (idx % 2) * 0.1, ease: 'easeOut' }}
                   whileHover={{ y: -6, transition: { duration: 0.2 } }}
                   className="bg-white rounded-2xl p-7 sm:p-8 border border-[#e4ded2] shadow-xs hover:border-[#103b2d]/30 hover:shadow-md transition-shadow flex flex-col justify-between group"
                 >
@@ -365,10 +365,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenTrial, onNavigateHom
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, x: -50 }}
+                  initial={{ opacity: 0, x: index < 2 ? -40 : 40 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.6, delay: 0.12 + index * 0.12, ease: 'easeOut' }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: (index % 2) * 0.1, ease: 'easeOut' }}
                   whileHover={{ y: -5, transition: { duration: 0.2 } }}
                   className="bg-white rounded-2xl p-7 border border-[#e4ded2] shadow-xs hover:border-[#103b2d]/30 hover:shadow-sm transition-shadow flex items-start gap-5"
                 >

@@ -45,15 +45,15 @@ export const HowWeTeachSection: React.FC = () => {
           </h2>
         </motion.div>
 
-        {/* 4 Cards Grid - Animated Left to Right */}
+        {/* 4 Cards Grid - 2 from Left to Right, 2 from Right to Left */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {cards.map((card, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, x: -60 }}
+              initial={{ opacity: 0, x: idx < 2 ? -40 : 40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.6, delay: 0.12 + idx * 0.12, ease: 'easeOut' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: (idx % 2) * 0.1, ease: 'easeOut' }}
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
               className="bg-white rounded-xl p-7 border border-[#eae5dc] shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between"
             >
