@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { TopBanner } from './components/TopBanner';
 import { Navbar, ViewState } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
@@ -14,47 +14,88 @@ import { TestimonialsSection } from './components/TestimonialsSection';
 import { PricingSection } from './components/PricingSection';
 import { CtaBanner } from './components/CtaBanner';
 import { Footer } from './components/Footer';
-import { FreeTrialModal, QuranCourseType } from './components/FreeTrialModal';
+import { FreeTrialModal } from './components/FreeTrialModal';
 import { ArticleModal } from './components/ArticleModal';
 import { AboutPage } from './components/AboutPage';
 import { CoursesPage } from './components/CoursesPage';
 import { PricingPage } from './components/PricingPage';
 import { BlogPage } from './components/BlogPage';
 import { ContactPage } from './components/ContactPage';
+import { AdminPanel } from './components/admin/AdminPanel';
+import { PublicBootstrapData } from './types/cms';
+import { FALLBACK_BOOTSTRAP_DATA } from './data/fallbackData';
+import { publicApi } from './services/api';
+
+const PRIMARY_ADMIN_SLUG = 'management-portal';
+const ADMIN_ROUTE_SLUGS = new Set(['management-portal', 'tutors-personal-space']);
+
+function isAdminPath(pathname: string): boolean {
+  const cleanPath = pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
+  return ADMIN_ROUTE_SLUGS.has(cleanPath);
+}
+
+function resolveViewFromLocation(): ViewState {
+  if (isAdminPath(window.location.pathname)) {
+    return 'admin';
+  }
+  const rawHash = window.location.hash.toLowerCase().replace('#', '');
+  const hash = rawHash.split('?')[0];
+  if (ADMIN_ROUTE_SLUGS.has(hash)) {
+    return 'admin';
+  } else if (hash === 'about' || hash === 'about-us') {
+    return 'about';
+  } else if (hash === 'courses' || hash === 'courses-page') {
+    return 'courses';
+  } else if (hash === 'pricing' || hash === 'fees') {
+    return 'pricing';
+  } else if (hash === 'blog' || hash === 'articles') {
+    return 'blog';
+  } else if (hash === 'contact' || hash === 'contact-us') {
+    return 'contact';
+  }
+  return 'home';
+}
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<ViewState>('home');
+  const [currentView, setCurrentView] = useState<ViewState>(() => resolveViewFromLocation());
   const [trialModalOpen, setTrialModalOpen] = useState(false);
-  const [selectedCourseForTrial, setSelectedCourseForTrial] = useState<QuranCourseType>('Noorani Qaida');
+  const [selectedCourseForTrial, setSelectedCourseForTrial] = useState<string>('Noorani Qaida');
   const [selectedArticle, setSelectedArticle] = useState<ArticleItem | null>(null);
+  const [siteData, setSiteData] = useState<PublicBootstrapData>(FALLBACK_BOOTSTRAP_DATA);
+
+  const loadSiteData = useCallback(async () => {
+    try {
+      const data = await publicApi.getBootstrap();
+      setSiteData(data);
+    } catch {
+      // Keep fallback data if database is temporarily unavailable
+    }
+  }, []);
+
+  useEffect(() => {
+    loadSiteData();
+  }, [loadSiteData]);
 
   // Sync view with hash on initial load and popstate/hashchange
   useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash.toLowerCase().replace('#', '');
-      if (hash === 'about' || hash === 'about-us') {
-        setCurrentView('about');
-      } else if (hash === 'courses' || hash === 'courses-page') {
-        setCurrentView('courses');
-      } else if (hash === 'pricing' || hash === 'fees') {
-        setCurrentView('pricing');
-      } else if (hash === 'blog' || hash === 'articles') {
-        setCurrentView('blog');
-      } else if (hash === 'contact' || hash === 'contact-us') {
-        setCurrentView('contact');
-      } else {
-        setCurrentView('home');
-      }
+    const handleRoute = () => {
+      setCurrentView(resolveViewFromLocation());
     };
 
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    handleRoute();
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('popstate', handleRoute);
+    return () => {
+      window.removeEventListener('hashchange', handleRoute);
+      window.removeEventListener('popstate', handleRoute);
+    };
   }, []);
 
-  const handleOpenTrial = (course?: QuranCourseType) => {
+  const handleOpenTrial = (course?: string) => {
     if (course) {
       setSelectedCourseForTrial(course);
+    } else if (siteData.courses.length > 0) {
+      setSelectedCourseForTrial(siteData.courses[0].title);
     }
     setTrialModalOpen(true);
   };
@@ -74,14 +115,32 @@ export default function App() {
   const handleNavigate = (view: ViewState) => {
     setCurrentView(view);
     if (view === 'home') {
-      if (window.location.hash) {
-        window.history.pushState(null, '', window.location.pathname);
+      if (window.location.hash || isAdminPath(window.location.pathname)) {
+        window.history.pushState(null, '', '/');
       }
+    } else if (view === 'admin') {
+      window.location.hash = PRIMARY_ADMIN_SLUG;
     } else {
-      window.location.hash = view;
+      if (isAdminPath(window.location.pathname)) {
+        window.history.pushState(null, '', `/#${view}`);
+      } else {
+        window.location.hash = view;
+      }
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  if (currentView === 'admin') {
+    return (
+      <AdminPanel
+        onExitAdmin={() => {
+          loadSiteData();
+          handleNavigate('home');
+        }}
+        onDataUpdated={loadSiteData}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#2D3732] flex flex-col font-sans selection:bg-[#103b2d] selection:text-white">
@@ -100,54 +159,70 @@ export default function App() {
         {currentView === 'about' && (
           <AboutPage 
             onOpenTrial={() => handleOpenTrial()} 
-            onNavigateHome={() => handleNavigate('home')} 
+            onNavigateHome={() => handleNavigate('home')}
+            welcomeContent={siteData.websiteContent.about_welcome}
+            aboutCourseCards={siteData.aboutCourseCards}
+            eligibilityCards={siteData.eligibilityCards}
           />
         )}
 
         {currentView === 'courses' && (
           <CoursesPage 
             onOpenTrial={handleOpenTrial} 
-            onNavigateHome={() => handleNavigate('home')} 
+            onNavigateHome={() => handleNavigate('home')}
+            courses={siteData.courses}
           />
         )}
 
         {currentView === 'pricing' && (
           <PricingPage 
             onOpenTrial={handleOpenTrial} 
-            onNavigateHome={() => handleNavigate('home')} 
+            onNavigateHome={() => handleNavigate('home')}
+            pricingPlans={siteData.pricingPlans}
           />
         )}
 
         {currentView === 'blog' && (
           <BlogPage 
             onSelectArticle={handleSelectArticle} 
-            onNavigateHome={() => handleNavigate('home')} 
+            onNavigateHome={() => handleNavigate('home')}
+            blogs={siteData.blogs}
           />
         )}
 
         {currentView === 'contact' && (
           <ContactPage 
             onOpenTrial={() => handleOpenTrial()} 
-            onNavigateHome={() => handleNavigate('home')} 
+            onNavigateHome={() => handleNavigate('home')}
+            contactInfo={siteData.contactInfo}
           />
         )}
 
         {currentView === 'home' && (
           <>
             {/* Hero Section */}
-            <HeroSection onOpenTrial={() => handleOpenTrial()} />
+            <HeroSection 
+              onOpenTrial={() => handleOpenTrial()} 
+              content={siteData.websiteContent.home_hero}
+            />
 
             {/* Why Study With Us */}
-            <WhyStudySection onOpenTrial={() => handleOpenTrial()} />
+            <WhyStudySection 
+              onOpenTrial={() => handleOpenTrial()} 
+              content={siteData.websiteContent.home_why_study}
+            />
 
-            {/* How We Teach (Our Approach - 4 cards: 2 from left, 2 from right) */}
+            {/* How We Teach (Unchanged) */}
             <HowWeTeachSection />
 
-            {/* From The Blog (Articles & Reflections) */}
-            <ArticlesSection onSelectArticle={handleSelectArticle} />
+            {/* From The Blog (Articles & Reflections — Single source of truth) */}
+            <ArticlesSection 
+              onSelectArticle={handleSelectArticle} 
+              blogs={siteData.blogs}
+            />
 
             {/* Families Say (Testimonials) */}
-            <TestimonialsSection />
+            <TestimonialsSection testimonials={siteData.testimonials} />
 
             {/* Simple Pricing (Affordable Plans for Every Family) */}
             <PricingSection onOpenTrial={() => handleOpenTrial()} />
@@ -169,6 +244,8 @@ export default function App() {
         isOpen={trialModalOpen} 
         onClose={handleCloseTrial} 
         initialCourse={selectedCourseForTrial}
+        activeCourses={siteData.courses}
+        registrationSettings={siteData.registrationSettings}
       />
 
       <ArticleModal 

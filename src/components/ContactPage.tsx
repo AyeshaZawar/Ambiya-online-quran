@@ -1,24 +1,51 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, Mail, Phone, Globe, CheckCircle2, Send, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Mail, Globe, CheckCircle2, Send, MessageCircle, MapPin } from 'lucide-react';
+import { ContactInfoData } from '../types/cms';
+import { FALLBACK_BOOTSTRAP_DATA } from '../data/fallbackData';
+import { publicApi } from '../services/api';
 
 interface ContactPageProps {
   onOpenTrial: () => void;
   onNavigateHome: () => void;
+  contactInfo?: ContactInfoData;
 }
 
-export const ContactPage: React.FC<ContactPageProps> = ({ onOpenTrial, onNavigateHome }) => {
+export const ContactPage: React.FC<ContactPageProps> = ({
+  onOpenTrial,
+  onNavigateHome,
+  contactInfo,
+}) => {
+  const info = contactInfo || FALLBACK_BOOTSTRAP_DATA.contactInfo;
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [subject, setSubject] = useState('Course Inquiry');
   const [message, setMessage] = useState('');
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !message.trim()) return;
-    setSent(true);
+    setSubmitting(true);
+    setErrorMsg(null);
+    try {
+      await publicApi.submitContactInquiry({
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        subject,
+        message: message.trim(),
+      });
+      setSent(true);
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : 'Unable to send your message right now.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -75,7 +102,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenTrial, onNavigat
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-[16px] sm:text-[17px] text-[#4f5953] leading-relaxed max-w-2xl mx-auto"
           >
-            We are available worldwide, online. Whether you have questions about our tutors, class schedules, or wish to register for a 1-week free trial, our coordinators are here to help.
+            {info.headerDescription}
           </motion.p>
         </div>
       </section>
@@ -94,20 +121,36 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenTrial, onNavigat
             >
               <div className="bg-white rounded-2xl p-7 border border-[#e5dfd3] shadow-xs space-y-6">
                 <h2 className="font-serif text-2xl font-bold text-[#11382b]">
-                  Academy Information
+                  {info.cardTitle}
                 </h2>
 
                 <div className="space-y-5">
+                  {info.addressLocation && (
+                    <div className="flex items-start gap-3.5">
+                      <div className="w-10 h-10 rounded-lg bg-[#103b2d]/10 text-[#103b2d] flex items-center justify-center shrink-0">
+                        <MapPin className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-wider text-[#103b2d]">
+                          Academy Location
+                        </p>
+                        <p className="text-sm text-[#4f5953] mt-0.5">
+                          {info.addressLocation}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex items-start gap-3.5">
                     <div className="w-10 h-10 rounded-lg bg-[#103b2d]/10 text-[#103b2d] flex items-center justify-center shrink-0">
                       <Globe className="w-5 h-5" />
                     </div>
                     <div>
                       <p className="text-xs font-bold uppercase tracking-wider text-[#103b2d]">
-                        Global Availability
+                        {info.globalAvailabilityTitle}
                       </p>
                       <p className="text-sm text-[#4f5953] mt-0.5">
-                        Available worldwide, online for students across UK, USA, Canada, Europe, Middle East & Australia.
+                        {info.globalAvailabilityText}
                       </p>
                     </div>
                   </div>
@@ -118,10 +161,15 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenTrial, onNavigat
                     </div>
                     <div>
                       <p className="text-xs font-bold uppercase tracking-wider text-[#103b2d]">
-                        Coordinator WhatsApp
+                        {info.whatsappTitle}
                       </p>
+                      {info.whatsappNumber && (
+                        <p className="text-sm font-semibold text-[#11382b] mt-0.5">
+                          {info.whatsappNumber}
+                        </p>
+                      )}
                       <p className="text-sm text-[#4f5953] mt-0.5">
-                        Direct communication for instant class arrangements and timing coordination.
+                        {info.whatsappText}
                       </p>
                     </div>
                   </div>
@@ -132,10 +180,15 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenTrial, onNavigat
                     </div>
                     <div>
                       <p className="text-xs font-bold uppercase tracking-wider text-[#103b2d]">
-                        Email Support
+                        {info.emailTitle}
                       </p>
+                      {info.emailAddress && (
+                        <p className="text-sm font-semibold text-[#11382b] mt-0.5 break-all">
+                          {info.emailAddress}
+                        </p>
+                      )}
                       <p className="text-sm text-[#4f5953] mt-0.5">
-                        Response within 24 hours for any questions or concerns.
+                        {info.emailText}
                       </p>
                     </div>
                   </div>
@@ -147,13 +200,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenTrial, onNavigat
                     onClick={onOpenTrial}
                     className="w-full py-3 rounded-lg bg-[#184c3c] hover:bg-[#123b2e] text-white text-sm font-medium transition-colors shadow-xs cursor-pointer text-center"
                   >
-                    Start Free Trial Week
+                    {info.ctaButtonText}
                   </button>
                 </div>
               </div>
             </motion.div>
 
-            {/* Right Contact Form (Spans 7 cols) */}
+            {/* Right Contact Form (Spans 7 cols — Unchanged fields & structure) */}
             <motion.div 
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -195,6 +248,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenTrial, onNavigat
                     <p className="text-xs text-[#6e7d75] mb-4">
                       Fill out the form below and our academic advisor will assist you with any questions.
                     </p>
+
+                    {errorMsg && (
+                      <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs">
+                        {errorMsg}
+                      </div>
+                    )}
 
                     <div>
                       <label className="block text-xs font-bold text-[#11382b] uppercase tracking-wider mb-1.5">
@@ -272,10 +331,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onOpenTrial, onNavigat
 
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-lg bg-[#184c3c] hover:bg-[#123b2e] text-white text-sm font-medium transition-colors shadow-xs cursor-pointer flex items-center justify-center gap-2"
+                      disabled={submitting}
+                      className="w-full py-3.5 rounded-lg bg-[#184c3c] hover:bg-[#123b2e] disabled:opacity-60 text-white text-sm font-medium transition-colors shadow-xs cursor-pointer flex items-center justify-center gap-2"
                     >
                       <Send className="w-4 h-4" />
-                      <span>Send Message</span>
+                      <span>{submitting ? 'Sending...' : 'Send Message'}</span>
                     </button>
                   </form>
                 )}

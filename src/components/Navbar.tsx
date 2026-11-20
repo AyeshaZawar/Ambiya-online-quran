@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Logo } from './Logo';
 import { Menu, X } from 'lucide-react';
 
-export type ViewState = 'home' | 'about' | 'courses' | 'pricing' | 'blog' | 'contact';
+export type ViewState = 'home' | 'about' | 'courses' | 'pricing' | 'blog' | 'contact' | 'admin';
 
 interface NavbarProps {
   onOpenTrial: () => void;

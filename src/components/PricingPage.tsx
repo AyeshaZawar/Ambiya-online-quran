@@ -1,81 +1,22 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, Check, Sparkles, HelpCircle, ArrowRight } from 'lucide-react';
-import { QuranCourseType } from './FreeTrialModal';
+import { PricingPlanItem } from '../types/cms';
+import { FALLBACK_BOOTSTRAP_DATA } from '../data/fallbackData';
 
 interface PricingPageProps {
-  onOpenTrial: (course?: QuranCourseType) => void;
+  onOpenTrial: (course?: string) => void;
   onNavigateHome: () => void;
+  pricingPlans?: PricingPlanItem[];
 }
 
-export const PricingPage: React.FC<PricingPageProps> = ({ onOpenTrial, onNavigateHome }) => {
-  const plans = [
-    {
-      id: 'plan-2days',
-      title: '2 Days / Week',
-      subtitle: 'Gentle & Steady Pace',
-      sessions: '8 Sessions per Month',
-      popular: false,
-      features: [
-        '1-to-1 dedicated teacher',
-        '30-45 minutes per class',
-        'Choice of Noorani Qaida, Reading, Tajweed, or Recitation',
-        'Flexible timings & rescheduling',
-        'Available for kids and adults',
-        '100% Free 1-Week Trial included',
-      ],
-      description: 'Ideal for busy working adults or young children beginning their Quran learning journey.',
-    },
-    {
-      id: 'plan-3days',
-      title: '3 Days / Week',
-      subtitle: 'Most Popular Choice',
-      sessions: '12 Sessions per Month',
-      popular: true,
-      features: [
-        '1-to-1 dedicated teacher',
-        '30-45 minutes per class',
-        'Full curriculum: Qaida, Reading, Tajweed, Recitation',
-        'Continuous pronunciation correction',
-        'Monthly progress evaluation',
-        'Priority schedule selection',
-        '100% Free 1-Week Trial included',
-      ],
-      description: 'The recommended standard for steady retention and rapid pronunciation development.',
-    },
-    {
-      id: 'plan-5days',
-      title: '5 Days / Week',
-      subtitle: 'Intensive Immersion',
-      sessions: '20 Sessions per Month',
-      popular: false,
-      features: [
-        '1-to-1 senior Quran tutor',
-        'Daily practice Monday to Friday (or flexible days)',
-        'Fast-track Tajweed & Qaida completion',
-        'Surah memorization & revision',
-        'Comprehensive progress reports',
-        '100% Free 1-Week Trial included',
-      ],
-      description: 'Best for students aiming to complete Qaida quickly or master fluent recitation with Tajweed.',
-    },
-    {
-      id: 'plan-6days',
-      title: '6 Days / Week',
-      subtitle: 'Complete Mastery & Hifz',
-      sessions: '24 Sessions per Month',
-      popular: false,
-      features: [
-        '1-to-1 dedicated senior tutor',
-        '30-45 minutes per class',
-        'Continuous 6-day practice with Sunday off',
-        'Intensive Tajweed & Hifz memorization',
-        'Weekly evaluations & progress reports',
-        '100% Free 1-Week Trial included',
-      ],
-      description: 'Ideal for dedicated learners seeking rapid fluency, complete Qaida graduation, or active Hifz.',
-    },
-  ];
+export const PricingPage: React.FC<PricingPageProps> = ({
+  onOpenTrial,
+  onNavigateHome,
+  pricingPlans,
+}) => {
+  const plans =
+    pricingPlans !== undefined ? pricingPlans : FALLBACK_BOOTSTRAP_DATA.pricingPlans;
 
   return (
     <div className="bg-[#FAF7F2] text-[#2D3732] min-h-screen overflow-hidden">
@@ -115,7 +56,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onOpenTrial, onNavigat
             transition={{ duration: 0.45 }}
             className="text-[12px] font-semibold tracking-widest uppercase text-[#b28338] mb-3 block"
           >
-            Simple & Transparent
+            Our Monthly Plans
           </motion.span>
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
@@ -131,71 +72,97 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onOpenTrial, onNavigat
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-[16px] sm:text-[17px] text-[#4f5953] leading-relaxed max-w-2xl mx-auto"
           >
-            Start with a completely free trial week — no card required. After your trial, choose a flexible monthly plan based on how many sessions per week fit your schedule.
+            All prices in GBP (£) · Per student · One-to-one classes. Start with a completely free trial week — no card required.
           </motion.p>
         </div>
       </section>
 
-      {/* 4 Pricing Plans Grid */}
+      {/* Pricing Plans Grid */}
       <section className="py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {plans.map((plan, idx) => (
               <motion.div
-                key={plan.id}
+                key={plan._id || idx}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-20px' }}
-                transition={{ duration: 0.5, delay: idx * 0.12, ease: 'easeOut' }}
+                transition={{ duration: 0.5, delay: (idx % 4) * 0.12, ease: 'easeOut' }}
                 whileHover={{ y: -6, transition: { duration: 0.2 } }}
                 className={`rounded-2xl p-7 sm:p-8 flex flex-col justify-between transition-all relative ${
-                  plan.popular
+                  plan.isPopular
                     ? 'bg-[#103b2d] text-white shadow-xl ring-2 ring-[#b28338]'
                     : 'bg-white text-[#2D3732] border border-[#e5dfd3] shadow-xs hover:shadow-md'
                 }`}
               >
-                {plan.popular && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#b28338] text-white text-[11px] font-bold px-4 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-xs">
+                {plan.isPopular && (
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#b28338] text-white text-[11px] font-bold px-4 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-xs whitespace-nowrap">
                     <Sparkles className="w-3.5 h-3.5" />
-                    <span>Most Popular</span>
+                    <span>{plan.popularBadgeText || 'Most Popular'}</span>
                   </div>
                 )}
 
                 <div>
-                  <div className="mb-6">
-                    <span className={`text-[12px] font-semibold tracking-wider uppercase block mb-1 ${
-                      plan.popular ? 'text-[#dfc588]' : 'text-[#b28338]'
-                    }`}>
-                      {plan.subtitle}
-                    </span>
+                  <div className="mb-5">
+                    {plan.subtitle && (
+                      <span className={`text-[12px] font-semibold tracking-wider uppercase block mb-1 ${
+                        plan.isPopular ? 'text-[#dfc588]' : 'text-[#b28338]'
+                      }`}>
+                        {plan.subtitle}
+                      </span>
+                    )}
                     <h2 className={`font-serif text-2xl sm:text-3xl font-bold mb-2 ${
-                      plan.popular ? 'text-white' : 'text-[#11382b]'
+                      plan.isPopular ? 'text-white' : 'text-[#11382b]'
                     }`}>
-                      {plan.title}
+                      {plan.planName}
                     </h2>
-                    <p className={`text-sm ${plan.popular ? 'text-[#c0d4ca]' : 'text-[#58645e]'}`}>
-                      {plan.sessions}
-                    </p>
+
+                    {/* Price */}
+                    <div className="flex items-baseline gap-1 mt-3 mb-2">
+                      <span className={`font-serif text-3xl sm:text-4xl font-bold ${
+                        plan.isPopular ? 'text-[#dfc588]' : 'text-[#103b2d]'
+                      }`}>
+                        {plan.currencySymbol}{plan.monthlyPrice}
+                      </span>
+                      <span className={`text-sm ${plan.isPopular ? 'text-[#c0d4ca]' : 'text-[#58645e]'}`}>
+                        /{plan.billingPeriod || 'month'} ({plan.currency})
+                      </span>
+                    </div>
+
+                    {/* Schedule Breakdown */}
+                    <div className={`text-xs space-y-1 pt-2 ${plan.isPopular ? 'text-[#c0d4ca]' : 'text-[#58645e]'}`}>
+                      <p>
+                        <strong className={plan.isPopular ? 'text-white' : 'text-[#11382b]'}>
+                          {plan.daysPerWeek}
+                        </strong> per week
+                        {plan.daysPerMonth ? ` · ${plan.daysPerMonth} per month` : ''}
+                      </p>
+                      <p>
+                        <strong className={plan.isPopular ? 'text-white' : 'text-[#11382b]'}>
+                          {plan.classesPerMonth}
+                        </strong> per month · {plan.classDuration} / class
+                      </p>
+                    </div>
                   </div>
 
                   <p className={`text-[14px] leading-relaxed mb-6 pb-6 border-b ${
-                    plan.popular ? 'text-[#cadcd2] border-white/15' : 'text-[#4f5953] border-stone-100'
+                    plan.isPopular ? 'text-[#cadcd2] border-white/15' : 'text-[#4f5953] border-stone-100'
                   }`}>
                     {plan.description}
                   </p>
 
                   <div className="space-y-3 mb-8">
                     <p className={`text-xs font-bold uppercase tracking-wider ${
-                      plan.popular ? 'text-[#dfc588]' : 'text-[#103b2d]'
+                      plan.isPopular ? 'text-[#dfc588]' : 'text-[#103b2d]'
                     }`}>
                       What's Included:
                     </p>
-                    {plan.features.map((feat) => (
-                      <div key={feat} className="flex items-start gap-2.5 text-[14px]">
+                    {plan.features.map((feat, fIdx) => (
+                      <div key={fIdx} className="flex items-start gap-2.5 text-[14px]">
                         <Check className={`w-4 h-4 shrink-0 mt-0.5 ${
-                          plan.popular ? 'text-[#dfc588]' : 'text-[#184c3c]'
+                          plan.isPopular ? 'text-[#dfc588]' : 'text-[#184c3c]'
                         }`} />
-                        <span className={plan.popular ? 'text-[#e5ede9]' : 'text-[#45524b]'}>
+                        <span className={plan.isPopular ? 'text-[#e5ede9]' : 'text-[#45524b]'}>
                           {feat}
                         </span>
                       </div>
@@ -208,18 +175,18 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onOpenTrial, onNavigat
                     type="button"
                     onClick={() => onOpenTrial()}
                     className={`w-full py-3.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs ${
-                      plan.popular
+                      plan.isPopular
                         ? 'bg-[#dfc588] text-[#11382b] hover:bg-[#d4b76e]'
                         : 'bg-[#184c3c] text-white hover:bg-[#123b2e]'
                     }`}
                   >
-                    <span>Start 1-Week Free Trial</span>
+                    <span>{plan.ctaText || 'Start 1-Week Free Trial'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                   <p className={`text-[11px] text-center mt-2 ${
-                    plan.popular ? 'text-[#a2bcaf]' : 'text-[#7d8b84]'
+                    plan.isPopular ? 'text-[#a2bcaf]' : 'text-[#7d8b84]'
                   }`}>
-                    No credit card required · Cancel anytime
+                    {plan.footnoteText || 'No credit card required · Cancel anytime'}
                   </p>
                 </div>
               </motion.div>

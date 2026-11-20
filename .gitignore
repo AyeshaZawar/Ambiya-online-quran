@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+.mongodb-data/
+public/uploads/
+

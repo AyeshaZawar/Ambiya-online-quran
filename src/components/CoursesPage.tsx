@@ -1,80 +1,23 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { BookOpen, Award, Sparkles, Volume2, ArrowRight, ArrowLeft, CheckCircle2, Users, Clock, ShieldCheck } from 'lucide-react';
-import { QuranCourseType } from './FreeTrialModal';
+import { ArrowRight, ArrowLeft, CheckCircle2, Users, Clock, ShieldCheck } from 'lucide-react';
+import { CourseItem } from '../types/cms';
+import { FALLBACK_BOOTSTRAP_DATA } from '../data/fallbackData';
+import { getLucideIcon } from '../utils/iconMap';
 
 interface CoursesPageProps {
-  onOpenTrial: (course?: QuranCourseType) => void;
+  onOpenTrial: (course?: string) => void;
   onNavigateHome: () => void;
+  courses?: CourseItem[];
 }
 
-export const CoursesPage: React.FC<CoursesPageProps> = ({ onOpenTrial, onNavigateHome }) => {
-  const coursesList = [
-    {
-      id: 'noorani-qaida',
-      title: 'Noorani Qaida' as QuranCourseType,
-      tag: 'Foundation',
-      description: 'Learn Arabic letters, pronunciation and basic reading rules.',
-      suitableFor: 'Complete beginners, children, and adults starting from scratch',
-      learningPoints: [
-        'Recognition of Arabic alphabet & letter shapes',
-        'Accurate pronunciation (Makharij)',
-        'Connecting letters and basic Harakaat',
-        'Foundation rules for fluent Quranic reading',
-      ],
-      icon: BookOpen,
-      badge: 'Course 01',
-      popular: true,
-    },
-    {
-      id: 'quran-reading',
-      title: 'Quran Reading' as QuranCourseType,
-      tag: 'Fluency',
-      description: 'Develop fluency and confidence in Quran recitation.',
-      suitableFor: 'Students who completed Qaida and wish to read directly from the Mushaf',
-      learningPoints: [
-        'Direct recitation practice from Juz Amma onward',
-        'Word-by-word fluency building and rhythm',
-        'Stopping signs (Waqf) and breathing control',
-        'Confidence in continuous verse reading',
-      ],
-      icon: Award,
-      badge: 'Course 02',
-      popular: false,
-    },
-    {
-      id: 'tajweed',
-      title: 'Tajweed' as QuranCourseType,
-      tag: 'Rules & Beauty',
-      description: 'Learn the essential rules of Tajweed for correct pronunciation.',
-      suitableFor: 'Readers wanting to eliminate errors and beautify their recitation',
-      learningPoints: [
-        'Articulation points (Makharij al-Huroof)',
-        'Rules of Noon Saakin, Meem Saakin, and Madd',
-        'Heavy and light letter attributes (Sifaat)',
-        'Application of Tajweed rules in daily recitation',
-      ],
-      icon: Sparkles,
-      badge: 'Course 03',
-      popular: false,
-    },
-    {
-      id: 'quran-recitation',
-      title: 'Quran Recitation' as QuranCourseType,
-      tag: 'Mastery',
-      description: 'Improve recitation with proper guidance and practice.',
-      suitableFor: 'Students and adults desiring polished, melodic recitation',
-      learningPoints: [
-        'Melodic cadence with strict Tajweed adherence',
-        'Continuous one-on-one correction with senior tutors',
-        'Memorization of daily Surahs and supplications',
-        'Deep spiritual connection with the sacred text',
-      ],
-      icon: Volume2,
-      badge: 'Course 04',
-      popular: false,
-    },
-  ];
+export const CoursesPage: React.FC<CoursesPageProps> = ({
+  onOpenTrial,
+  onNavigateHome,
+  courses,
+}) => {
+  const coursesList =
+    courses !== undefined ? courses : FALLBACK_BOOTSTRAP_DATA.courses;
 
   return (
     <div className="bg-[#FAF7F2] text-[#2D3732] min-h-screen overflow-hidden">
@@ -135,18 +78,17 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({ onOpenTrial, onNavigat
         </div>
       </section>
 
-      {/* 4 Courses Section with 2 Left / 2 Right Animation */}
+      {/* Courses Section */}
       <section className="py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {coursesList.map((course, idx) => {
-              const Icon = course.icon;
-              // 2 from Left, 2 from Right per user instruction
-              const isFromLeft = idx < 2;
+              const Icon = getLucideIcon(course.iconName);
+              const isFromLeft = idx % 2 === 0;
 
               return (
                 <motion.div
-                  key={course.id}
+                  key={course._id || course.slug}
                   initial={{ opacity: 0, x: isFromLeft ? -50 : 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-20px' }}
@@ -192,8 +134,8 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({ onOpenTrial, onNavigat
                       <p className="text-[12px] font-bold uppercase tracking-wider text-[#103b2d]">
                         Key Learning Outcomes:
                       </p>
-                      {course.learningPoints.map((point) => (
-                        <div key={point} className="flex items-start gap-2.5 text-[14px] text-[#425048]">
+                      {course.learningPoints.map((point, pIdx) => (
+                        <div key={pIdx} className="flex items-start gap-2.5 text-[14px] text-[#425048]">
                           <CheckCircle2 className="w-4 h-4 text-[#184c3c] shrink-0 mt-0.5" />
                           <span>{point}</span>
                         </div>
@@ -221,7 +163,7 @@ export const CoursesPage: React.FC<CoursesPageProps> = ({ onOpenTrial, onNavigat
         </div>
       </section>
 
-      {/* Teaching Pillars Banner */}
+      {/* Teaching Pillars Banner (Unchanged) */}
       <section className="py-14 bg-[#FAF7F2] border-t border-[#ede7dc]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

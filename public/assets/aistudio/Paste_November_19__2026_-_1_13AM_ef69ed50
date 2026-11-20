@@ -1,0 +1,947 @@
+# COMPLETE BACKEND DEVELOPMENT & ADMIN PANEL
+## Existing Website Integration — React, TypeScript & MongoDB
+
+### 1. PROJECT OVERVIEW
+
+I have already completed the frontend UI/UX of my website, **Adam to Muhammad Online Quran Academy**.
+
+I now want you to develop a complete, functional backend and Admin Panel using MongoDB.
+
+I have already provided a complete frontend analysis report. Use that report together with the actual source code to understand the project before making any changes.
+
+The existing project uses:
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- motion/react
+- lucide-react
+- Single-page application architecture
+- Hash-based navigation managed through `src/App.tsx`
+
+The existing project has six main public-facing pages:
+
+1. Home
+2. About Us
+3. Courses
+4. Pricing
+5. Blog
+6. Contact
+
+Existing components include `HeroSection.tsx`, `WhyStudySection.tsx`, `ArticlesSection.tsx`, `TestimonialsSection.tsx`, `AboutPage.tsx`, `CoursesPage.tsx`, `PricingPage.tsx`, `BlogPage.tsx`, `ContactPage.tsx` and `FreeTrialModal.tsx`.
+
+There is currently no functioning backend, database integration, or API persistence. Existing forms only display frontend confirmation messages.
+
+**Your task is to build a real backend and connect it to the existing frontend without unnecessarily changing its design.**
+
+### 2. ADMIN PANEL STRUCTURE
+
+Create a professional, clean, easy-to-use Admin Panel with exactly four main sidebar sections:
+
+1. Edit Content
+2. Blogs
+3. Users & Messages
+4. Account Settings
+
+Each section can have its own internal tabs and sub-pages.
+
+The Admin Panel must allow a non-technical administrator to manage the specified website content without touching the source code.
+
+Do not add unnecessary management features or additional main sidebar sections.
+
+---
+
+# 3. SECTION ONE — EDIT CONTENT
+
+Inside Edit Content, create the following page-management options:
+
+- Home Page
+- About Us Page
+- Courses Page
+- Pricing Page
+- Contact Page
+
+Each page should have its own organized editing interface.
+
+Only make the specific content and elements listed below editable. Everything else should retain its existing UI, styling and functionality.
+
+## A. HOME PAGE
+
+The Home Page must have the following editable areas:
+
+### 1. Hero Section
+
+Existing component: `HeroSection.tsx`
+
+Allow the admin to:
+
+- Edit the main introductory paragraph.
+- Edit the existing numbered bullet/step content.
+- Replace the existing hero image with a newly uploaded image.
+
+The existing heading, overall design, layout, button styling and animations should remain unchanged unless specifically mentioned above.
+
+### 2. Why Study With Us Section
+
+Existing component: `WhyStudySection.tsx`
+
+Allow the admin to:
+
+- Edit the existing descriptive paragraphs.
+- Replace the existing section image.
+
+Keep the existing heading, CTA button, design and other UI elements unchanged.
+
+**Important:** Do not make the four How We Teach feature cards or other Home Page sections editable.
+
+### 3. Articles & Reflections Section
+
+Existing component: `ArticlesSection.tsx`
+
+This section must automatically display published articles created through the Blogs section of the Admin Panel.
+
+Whenever the admin publishes a new blog, it must automatically appear:
+- On the Home Page Articles & Reflections section.
+- On the separate Blog Page.
+
+Whenever the admin edits, unpublishes or deletes an article, the corresponding changes must appear everywhere that article is displayed.
+
+Do not maintain separate static article data for the Home Page and Blog Page.
+
+### 4. Student Testimonials / Reviews
+
+Existing component: `TestimonialsSection.tsx`
+
+The admin should be able to manage student and parent reviews.
+
+Allow the admin to:
+
+- Add new testimonial cards.
+- Edit existing testimonials.
+- Remove testimonials.
+- Keep existing testimonials without changing them.
+- Update the review text.
+- Update the student/parent title or display name.
+- Update the location where applicable.
+- Control which reviews are displayed.
+
+Maintain the existing testimonial card design.
+
+The admin should be able to add additional review cards without breaking the existing layout.
+
+---
+
+## B. ABOUT US PAGE
+
+Existing component: `AboutPage.tsx`
+
+Allow the following areas to be managed:
+
+### 1. Welcome / Introduction Section
+
+Allow the admin to:
+
+- Edit the existing section heading.
+- Edit the introductory paragraphs.
+- Replace the existing image.
+- Update the image caption if applicable.
+
+Keep the original layout and design.
+
+### 2. Our Mission Section
+
+**Do not make this section editable.**
+
+Keep the existing Mission section, its heading, text and visual design exactly as they are.
+
+### 3. What We Teach — Course Overview Cards
+
+This section currently contains four informational course cards:
+
+- Noorani Qaida
+- Quran Reading
+- Tajweed
+- Quran Recitation
+
+Allow the admin to:
+
+- Edit existing cards.
+- Change course titles.
+- Change descriptions.
+- Manage other existing text fields in each card.
+- Add new cards.
+- Remove existing cards.
+
+Maintain the same card layout, icon styling and visual design.
+
+### 4. Our Teaching Approach / Methodology
+
+**Keep this entire section unchanged.**
+
+Do not add content editing functionality here.
+
+### 5. Who Can Join? — Eligibility Cards
+
+This section currently contains four numbered cards.
+
+Allow the admin to:
+
+- Edit all four existing cards.
+- Change their headings and descriptions.
+- Add additional cards.
+- Remove existing cards.
+- Manage their display order.
+
+Keep the current design and card structure.
+
+### 6. Bottom CTA Section
+
+Keep the existing bottom CTA section unchanged.
+
+---
+
+## C. COURSES PAGE
+
+Existing component: `CoursesPage.tsx`
+
+The Courses Page currently displays four detailed course cards:
+
+1. Noorani Qaida
+2. Quran Reading
+3. Tajweed
+4. Quran Recitation
+
+These cards must become fully manageable through the Admin Panel.
+
+### Course Management Features
+
+For each course card, allow the admin to edit:
+
+- Course title.
+- Course number or label.
+- Course category/tag.
+- Description.
+- Suitable For information.
+- Key Learning Outcomes.
+- Existing informational text.
+- Existing popularity badge, if applicable.
+
+The admin must be able to:
+
+- Create a new course card.
+- Edit any existing course card.
+- Delete a course card.
+- Manage the display order.
+- Publish or hide a course where appropriate.
+
+Use the same existing card design for all cards, including newly added ones.
+
+If the admin adds a fifth or sixth course, it must automatically appear in the existing card grid without requiring frontend code changes.
+
+### Important Course Registration Integration
+
+The courses managed on this page must also be connected to the Course selection options in the Free Trial Registration Form.
+
+For example:
+
+If the admin adds a new course named "Quran Memorization", it should automatically become available as a selectable course in the registration form.
+
+If a course is removed or made inactive, ensure it is no longer offered to new registrants while preserving existing historical registration records.
+
+### Keep Unchanged
+
+The bottom Teaching Pillars section, which contains:
+- 1-on-1 Attention
+- Flexible Timings
+- Free Trial Week
+
+Must remain unchanged.
+
+Also keep the existing Courses Page layout, colors, animations, icons and design.
+
+---
+
+## D. PRICING PAGE
+
+Existing component: `PricingPage.tsx`
+
+This page must have complete pricing-card management functionality.
+
+The admin must be able to edit the entire content of each pricing card.
+
+### Initial Pricing Content
+
+Use the following pricing information as the initial content for the four pricing plans:
+
+**Our Monthly Plans**
+
+All prices in GBP (£) · Per student · One-to-one classes
+
+| Plan | Days per Week | Classes per Month | Class Duration | Price |
+|---|---|---|---|---|
+| Basic Plan | 2 days | 8 classes | 30 minutes each | £25/month |
+| Standard Plan | 3 days | 12 classes | 30 minutes each | £35/month |
+| Advanced Plan | 4 days | 16 classes | 30 minutes each | £45/month |
+| Premium Plan | 5 days | 20 classes | 30 minutes each | £55/month |
+
+### Pricing Card Management
+
+Allow the admin to edit every relevant part of a pricing card:
+
+- Plan name.
+- Days per week.
+- Classes per month.
+- Duration of each class.
+- Monthly price.
+- Currency.
+- Short description.
+- Plan features.
+- Highlight/badge, such as Most Popular.
+- Other existing card content.
+
+The admin should be able to:
+
+- Add new pricing cards.
+- Edit existing pricing cards.
+- Delete pricing cards.
+- Change the price whenever needed.
+- Update the number of classes per month.
+- Change the number of teaching days.
+- Change individual class durations.
+- Manage the order in which cards appear.
+
+For example, the admin may decide to change Basic Plan from 2 days a week to 3 days a week and update its monthly price accordingly.
+
+The public Pricing Page must immediately reflect the saved changes.
+
+### Pricing UI Requirements
+
+Keep the existing pricing-card design and overall page layout.
+
+Do not create a completely different pricing interface.
+
+Make newly added cards follow the existing design automatically.
+
+The prices are informational content only. Do not introduce a payment gateway, checkout system or payment functionality because these are not part of the existing frontend.
+
+The supplied pricing values must be used as the initial data, but the admin must be able to change them independently later.
+
+---
+
+## E. CONTACT PAGE
+
+Existing component: `ContactPage.tsx`
+
+The Contact Page contains an Academy Information card and a Send a Message form.
+
+### Academy Information Card
+
+Allow the admin to edit all relevant information displayed in this card, including:
+
+- Address or location information.
+- Global availability information.
+- WhatsApp/contact number.
+- Email address.
+- Contact descriptions.
+- Other existing contact information displayed in the card.
+
+The admin should be able to update this information without editing the source code.
+
+### Contact Form
+
+**Keep the existing Contact Inquiry Form exactly as it is.**
+
+Do not change its existing:
+- Input fields.
+- Subject dropdown structure.
+- Layout.
+- Labels.
+- Styling.
+- Submit button.
+- User interaction design.
+
+The only requirement is to connect it to the backend so that submitted inquiries are saved in MongoDB and become visible in the Admin Panel.
+
+---
+
+# 4. SECTION TWO — BLOG MANAGEMENT
+
+Existing components:
+- `ArticlesSection.tsx`
+- `BlogPage.tsx`
+- `ArticleModal.tsx`
+
+Create a complete Blog Management System.
+
+### Admin Features
+
+Allow the admin to:
+
+- Add new articles.
+- Edit existing articles.
+- Delete articles.
+- Publish articles.
+- Save articles as drafts.
+- Unpublish previously published articles.
+
+### Blog Fields
+
+Each article should support the content currently used in the website:
+
+- Article title.
+- Article excerpt/short description.
+- Featured image.
+- Read time.
+- Full article content, including multiple paragraphs.
+- Publication status.
+
+Allow the admin to preview the article before publishing.
+
+### Blog Synchronization
+
+This is extremely important.
+
+The Home Page and Blog Page currently use the same article data source.
+
+Preserve this shared-content behavior through the database.
+
+Whenever an admin publishes a blog:
+
+1. It should appear in the Home Page Articles & Reflections section.
+2. It should appear in the Blog Page article grid.
+3. Clicking the article should open the existing Article Reader Modal with the correct article information.
+
+Whenever an article is edited or deleted, the change must be reflected in both places.
+
+Draft or unpublished articles must not be visible to public visitors.
+
+Do not create duplicate blog records for different website sections.
+
+---
+
+# 5. SECTION THREE — USERS & MESSAGES
+
+Create two separate internal management areas within this sidebar section.
+
+1. Free Trial Registrations
+2. Contact Inquiries
+
+These two forms must have separate submission records and separate management interfaces.
+
+## A. FREE TRIAL REGISTRATIONS
+
+Existing component: `FreeTrialModal.tsx`
+
+Connect the existing Free Trial Registration Form to the backend.
+
+Every successful submission must be stored in MongoDB.
+
+The Admin Panel should display all registration submissions in a clean table.
+
+### Registration Information
+
+Display:
+
+- Full Name.
+- Selected Course.
+- WhatsApp / Mobile Number.
+- Email Address.
+- Selected Class Time.
+- Class Duration.
+- Selected Days in a Week or Month, as applicable.
+- Message / Notes.
+- Submission Date and Time.
+
+The admin should be able to open a registration to view its complete details.
+
+Include search, filtering, pagination, and an option to delete a record with confirmation.
+
+Never expose passwords or other authentication secrets. These are registration submissions, not user passwords or account credentials.
+
+## B. CONTACT INQUIRIES
+
+Connect the existing Contact Inquiry Form to MongoDB.
+
+The admin should have a separate place to view these submissions.
+
+Display:
+
+- Name.
+- Email Address.
+- WhatsApp / Phone.
+- Inquiry Subject.
+- Complete Message.
+- Submission Date and Time.
+- Read / Unread status.
+
+Allow the admin to:
+
+- View all inquiries.
+- Open individual messages.
+- Mark messages as Read or Unread.
+- Search messages.
+- Delete messages with confirmation.
+
+**Important:** Free Trial Registrations and Contact Inquiries must never be mixed into one indistinguishable list. Keep them clearly separated in the Admin Panel.
+
+---
+
+# 6. REGISTRATION FORM — CONFIGURABLE OPTIONS
+
+Existing component: `FreeTrialModal.tsx`
+
+The registration form's existing overall design, layout and personal-information fields must remain unchanged.
+
+Do not create a completely new form builder.
+
+However, I want the admin to be able to manage the available selectable options inside the existing form.
+
+### A. Select Course
+
+The available course options should be connected to the active courses on the Courses Page.
+
+When the admin adds, edits or removes courses, the registration form must reflect the active course options.
+
+### B. Select Class Time
+
+The existing registration form has:
+
+- Hour dropdown.
+- Minute dropdown.
+- AM/PM selection.
+
+Allow the admin to manage the available hour and minute options.
+
+The admin should be able to add or remove hour/minute choices without changing the form's overall visual design.
+
+Maintain proper time formatting and validation.
+
+### C. Class Duration
+
+The existing duration options include:
+
+- 30 Minutes.
+- 45 Minutes.
+- 1 Hour.
+- 1.5 Hours.
+- 2 Hours.
+
+Allow the admin to:
+
+- Add new duration options.
+- Remove existing duration options.
+- Edit existing duration values.
+
+### D. Days Per Week / Days Per Month
+
+The existing form provides a Select Days in a Week option.
+
+Allow the admin to manage the available weekly options, such as 1 Day, 2 Days, 3 Days, etc.
+
+Also support a configurable Select Days in a Month option.
+
+The admin should be able to:
+
+- Add weekly schedule options.
+- Remove weekly schedule options.
+- Add monthly schedule options.
+- Remove monthly schedule options.
+- Update the available schedule values.
+
+Make sure the registration system correctly saves whether the student selected a weekly or monthly schedule.
+
+Keep the interface consistent with the existing registration form.
+
+### E. Keep Personal Information Fields Unchanged
+
+These fields must remain exactly as they are:
+
+- Full Name.
+- WhatsApp / Mobile.
+- Email Address.
+- Message / Notes.
+
+Do not provide an unnecessary form-field builder or allow the admin to arbitrarily change these personal-information fields.
+
+The objective is only to give the admin control over the course and class-scheduling options.
+
+---
+
+# 7. SECTION FOUR — ACCOUNT SETTINGS
+
+Create a secure Account Settings section for the administrator.
+
+### Profile Management
+
+Allow the admin to view and update their account name and appropriate profile information.
+
+### Change Email Address
+
+The admin should be able to:
+
+1. Enter the new email address.
+2. Enter the current account password.
+3. Verify the current password on the server.
+4. Receive an email verification link or OTP at the new email address.
+5. Complete verification before the email address is updated.
+
+### Change Password
+
+Allow the admin to request password changes through their registered email.
+
+The workflow should be:
+
+1. Request password reset.
+2. Receive a secure verification link or OTP.
+3. Verify identity.
+4. Enter a new password.
+5. Save the newly hashed password.
+6. Invalidate existing sessions where appropriate.
+
+### Authentication
+
+Implement:
+
+- Admin login.
+- Logout.
+- Forgot password.
+- Secure sessions.
+- Protected Admin Panel routes.
+- Protected admin APIs.
+
+Do not create a public admin registration page.
+
+Create the initial admin account through a secure seed script or environment-based setup.
+
+---
+
+# 8. BACKEND & MONGODB ARCHITECTURE
+
+Use MongoDB as the main database.
+
+Build a clean backend architecture that is compatible with the existing React project.
+
+Use Node.js and Express for the backend API if compatible with the current project setup, and use Mongoose for MongoDB models.
+
+Reuse compatible existing dependencies wherever possible.
+
+### Suggested Database Collections
+
+Create properly structured collections for:
+
+- Admins
+- WebsiteContent
+- Courses
+- AboutCourseCards
+- EligibilityCards
+- PricingPlans
+- Blogs
+- Testimonials
+- ContactInformation
+- RegistrationSettings
+- TrialRegistrations
+- ContactInquiries
+- VerificationTokens or equivalent authentication records
+
+Use suitable schemas, validation, timestamps and indexes.
+
+Keep collections organized and avoid unnecessarily duplicating data.
+
+### API Requirements
+
+Create properly structured REST APIs for:
+
+- Admin authentication.
+- Home content management.
+- About content management.
+- Courses management.
+- Pricing management.
+- Blog management.
+- Testimonials management.
+- Contact information management.
+- Registration option management.
+- Trial registration submissions.
+- Contact inquiry submissions.
+- Account settings.
+- Email verification and password reset.
+
+Protect all management endpoints with admin authentication.
+
+Public endpoints should expose only the data required by the public website.
+
+Validate data on the server, not just in React.
+
+---
+
+# 9. IMAGE UPLOAD SYSTEM
+
+The admin must be able to replace the specified website images directly through the Admin Panel.
+
+Implement an image upload solution.
+
+Requirements:
+
+- Upload new images.
+- Display existing images.
+- Preview images before saving.
+- Replace existing images.
+- Validate file type and size.
+- Store images in suitable file storage.
+- Store image URLs and metadata in MongoDB.
+
+Do not store large image binaries directly inside MongoDB.
+
+Use an appropriate storage provider based on the existing infrastructure. Configure its credentials using environment variables.
+
+When an image is replaced, ensure the corresponding public website section displays the new image.
+
+Do not accidentally change another section's image just because it currently uses the same image file. Treat each editable image placement as its own content field unless explicitly configured to share it.
+
+---
+
+# 10. INITIAL DATA MIGRATION & PRESERVING EXISTING CONTENT
+
+This is an especially important requirement.
+
+My existing website already contains content, four course cards, pricing information, three blog articles, testimonials, images and other information.
+
+Do not allow the website to become empty after connecting MongoDB.
+
+Create a proper initial data migration or seeding process that transfers the existing static content into the appropriate database collections.
+
+Use the supplied new pricing plans as the initial pricing content.
+
+Preserve the existing three articles and testimonials as initial records.
+
+Also preserve the current course content and other existing public-facing content.
+
+The seed process must only initialize missing records. It must not overwrite content that the admin has already edited when the server restarts.
+
+If the database is temporarily unavailable or has not been initialized, the existing website must have a safe fallback rather than rendering a broken or blank page.
+
+---
+
+# 11. FRONTEND INTEGRATION REQUIREMENTS
+
+Connect the existing React frontend to the real backend APIs.
+
+Do not simply create an Admin Panel UI without implementing its functionality.
+
+Every Save, Update, Add, Delete, Publish and Upload action must perform the actual operation.
+
+Examples:
+
+- Editing the Home Hero paragraph updates the actual Home Page.
+- Replacing the Hero image updates the actual Home Page image.
+- Editing Why Study With Us updates its existing paragraphs and image.
+- Editing About Us updates its introduction section.
+- Adding a course updates the Courses Page.
+- Adding a course also updates the registration course options.
+- Editing pricing updates the Pricing Page.
+- Adding a pricing plan displays another card using the existing UI style.
+- Publishing a blog makes it visible on both Home and Blog pages.
+- Adding or removing testimonials updates the Home Page.
+- Editing Contact Information updates the Contact Page.
+- Submitting the Free Trial form saves a registration record.
+- Submitting the Contact form saves a separate inquiry record.
+
+Use one reliable source of truth for each managed content collection.
+
+Do not leave static arrays overriding database content after integration.
+
+---
+
+# 12. ADMIN PANEL DESIGN REQUIREMENTS
+
+Create a professional and simple Admin Panel.
+
+It should have:
+
+### Main Sidebar
+
+- Edit Content
+- Blogs
+- Users & Messages
+- Account Settings
+
+### Edit Content Sub-Navigation
+
+- Home Page
+- About Us Page
+- Courses Page
+- Pricing Page
+- Contact Page
+
+### Users & Messages Sub-Navigation
+
+- Free Trial Registrations
+- Contact Inquiries
+
+### UI Requirements
+
+- Clean layout.
+- Easy-to-understand input fields.
+- Clear page navigation.
+- Proper image previews.
+- Consistent forms.
+- Organized tables.
+- Search and filters where needed.
+- Loading indicators.
+- Success and error notifications.
+- Confirmation before deletion.
+- Responsive design.
+
+For card management, use a simple interface that allows the admin to edit existing cards and add or remove cards easily.
+
+For example, when adding a new course or pricing card, show clearly labeled fields relevant to that card.
+
+Do not make the interface unnecessarily complicated.
+
+---
+
+# 13. SECURITY & CODE QUALITY
+
+Implement proper backend security.
+
+Include:
+
+- Password hashing with bcrypt or Argon2.
+- Secure authentication.
+- HTTP-only secure cookies or another appropriate session mechanism.
+- Authorization middleware.
+- Server-side validation.
+- Rate limiting for authentication routes.
+- Secure verification tokens with expiry.
+- Input sanitization.
+- Safe file uploads.
+- Environment variables for secrets.
+- Appropriate error handling.
+
+Keep the code organized into:
+
+- Models
+- Routes
+- Controllers
+- Middleware
+- Services
+- Database configuration
+- Validation
+- Upload utilities
+- Frontend API services
+
+Avoid giant files, duplicate logic, unnecessary packages and hardcoded credentials.
+
+---
+
+# 14. STRICT FRONTEND PRESERVATION RULES
+
+Please follow these instructions carefully:
+
+1. Do not redesign my existing public website.
+2. Do not change its color scheme, typography, spacing, card styles or layout unnecessarily.
+3. Do not remove existing animations or transitions.
+4. Do not change the existing page navigation architecture unnecessarily.
+5. Do not change the Contact Inquiry Form.
+6. Do not change the personal-information fields of the Free Trial Registration Form.
+7. Do not make the Mission or Methodology sections editable.
+8. Do not make the Home Page How We Teach cards editable.
+9. Do not make the Courses Page Teaching Pillars section editable.
+10. Do not create unrequested course filters, student dashboards, tutor dashboards or payment systems.
+11. Newly added cards must follow the exact existing visual design.
+12. Existing public website content must be preserved and migrated into MongoDB.
+13. Only the content explicitly listed in this specification should be manageable through the Admin Panel.
+
+If a requested capability requires a small frontend adjustment, implement only what is necessary while maintaining the existing UI/UX.
+
+---
+
+# 15. TESTING & FINAL DELIVERY
+
+Test the complete system before considering the project finished.
+
+Verify all of the following:
+
+**Admin Panel**
+- Login and logout.
+- Protected routes.
+- All four sidebar sections.
+- Account settings.
+
+**Content Management**
+- Home Hero text and image updates.
+- Why Study With Us text and image updates.
+- About Us introduction updates.
+- About course overview card management.
+- Eligibility card management.
+- Courses CRUD operations.
+- Pricing plan CRUD operations.
+- Contact Information updates.
+
+**Blogs & Testimonials**
+- Add, edit, delete and publish blogs.
+- Blog synchronization between Home and Blog pages.
+- Article modal displays correct content.
+- Add, edit and remove testimonials.
+
+**Forms**
+- Free Trial registration submissions are saved.
+- Contact inquiries are saved separately.
+- Registration options update dynamically.
+- Historical submission information remains intact.
+
+**Database & Security**
+- MongoDB connectivity.
+- Data validation.
+- Protected APIs.
+- Secure authentication.
+- Image uploads.
+- Email verification.
+- Password reset.
+
+**Frontend**
+- All six existing pages still work.
+- Existing navigation still works.
+- Existing animations remain intact.
+- Responsive layouts remain intact.
+- No broken images.
+- No console errors.
+- No blank pages.
+- No unnecessary frontend regressions.
+
+### Final Deliverables
+
+Provide:
+
+1. Complete functional backend.
+2. MongoDB integration.
+3. Complete Admin Panel.
+4. Working API endpoints.
+5. Frontend/backend integration.
+6. Dynamic content management.
+7. Image upload system.
+8. Blog and testimonial management.
+9. Registration and inquiry management.
+10. Secure admin authentication.
+11. Email verification and password reset.
+12. `.env.example` file.
+13. Initial admin account setup instructions.
+14. Database setup instructions.
+15. Local development instructions.
+16. Deployment instructions.
+
+Explain all required environment variables and configuration steps.
+
+---
+
+# FINAL INSTRUCTION
+
+First inspect the actual existing project and compare it against the supplied frontend audit report.
+
+Then implement the backend and Admin Panel directly inside my existing project.
+
+Do not rebuild the website.
+
+Do not provide only a proposal, plan, static dashboard, or sample implementation.
+
+I need a complete working system in which the administrator can manage the specified content through the Admin Panel and see those changes reflected on the existing public website.
+
+**The original frontend UI/UX must remain recognizable and unchanged. Only the explicitly requested content-management functionality should be added.**

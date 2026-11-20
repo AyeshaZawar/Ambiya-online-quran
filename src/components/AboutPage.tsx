@@ -1,51 +1,40 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { 
-  ArrowLeft, 
-  BookOpen, 
-  Sparkles, 
-  Award, 
-  Volume2, 
-  Users, 
-  Heart, 
-  Compass, 
-  Baby, 
-  UserCheck, 
-  GraduationCap 
-} from 'lucide-react';
+import { ArrowLeft, Users, Heart, Compass } from 'lucide-react';
+import {
+  AboutWelcomeContentData,
+  AboutCourseCardItem,
+  EligibilityCardItem,
+} from '../types/cms';
+import { FALLBACK_BOOTSTRAP_DATA } from '../data/fallbackData';
+import { getLucideIcon } from '../utils/iconMap';
 
 interface AboutPageProps {
   onOpenTrial: () => void;
   onNavigateHome: () => void;
+  welcomeContent?: AboutWelcomeContentData;
+  aboutCourseCards?: AboutCourseCardItem[];
+  eligibilityCards?: EligibilityCardItem[];
 }
 
-export const AboutPage: React.FC<AboutPageProps> = ({ onOpenTrial, onNavigateHome }) => {
-  const courses = [
-    {
-      title: 'Noorani Qaida',
-      description: 'Learn Arabic letters, pronunciation and basic reading rules.',
-      icon: BookOpen,
-      tag: '01',
-    },
-    {
-      title: 'Quran Reading',
-      description: 'Develop fluency and confidence in Quran recitation.',
-      icon: Award,
-      tag: '02',
-    },
-    {
-      title: 'Tajweed',
-      description: 'Learn the essential rules of Tajweed for correct pronunciation.',
-      icon: Sparkles,
-      tag: '03',
-    },
-    {
-      title: 'Quran Recitation',
-      description: 'Improve recitation with proper guidance and practice.',
-      icon: Volume2,
-      tag: '04',
-    },
-  ];
+export const AboutPage: React.FC<AboutPageProps> = ({
+  onOpenTrial,
+  onNavigateHome,
+  welcomeContent,
+  aboutCourseCards,
+  eligibilityCards,
+}) => {
+  const fallbackWelcome = FALLBACK_BOOTSTRAP_DATA.websiteContent.about_welcome;
+  const welcome = welcomeContent || fallbackWelcome;
+  const welcomeParagraphs =
+    welcome.paragraphs !== undefined ? welcome.paragraphs : fallbackWelcome.paragraphs;
+  const welcomeImageUrl =
+    welcome.imageUrl !== undefined ? welcome.imageUrl : fallbackWelcome.imageUrl;
+
+  const courses =
+    aboutCourseCards !== undefined
+      ? aboutCourseCards
+      : FALLBACK_BOOTSTRAP_DATA.aboutCourseCards;
 
   const teachingPillars = [
     {
@@ -65,28 +54,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenTrial, onNavigateHom
     },
   ];
 
-  const suitableFor = [
-    {
-      text: 'Children who are beginning their Quran learning journey.',
-      icon: Baby,
-      num: '01',
-    },
-    {
-      text: 'Adults who want to improve their Quran reading.',
-      icon: UserCheck,
-      num: '02',
-    },
-    {
-      text: 'Beginners who want to learn Noorani Qaida.',
-      icon: BookOpen,
-      num: '03',
-    },
-    {
-      text: 'Students who wish to improve their Tajweed and recitation.',
-      icon: GraduationCap,
-      num: '04',
-    },
-  ];
+  const suitableFor =
+    eligibilityCards !== undefined
+      ? eligibilityCards
+      : FALLBACK_BOOTSTRAP_DATA.eligibilityCards;
 
   return (
     <div className="bg-[#FAF7F2] text-[#2D3732] min-h-screen overflow-hidden">
@@ -125,7 +96,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenTrial, onNavigateHom
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left Column: Text */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className={`${welcomeImageUrl ? 'lg:col-span-7' : 'lg:col-span-12 max-w-3xl'} space-y-6`}>
               <motion.span 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -135,58 +106,60 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenTrial, onNavigateHom
                 About Us
               </motion.span>
 
-              <motion.h1 
-                initial={{ opacity: 0, y: -25 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className="font-serif text-3xl sm:text-4xl lg:text-[44px] font-medium text-[#103b2d] leading-[1.2] tracking-tight"
-              >
-                Welcome to Adam to Muhammad Online Quran Academy
-              </motion.h1>
+              {welcome.heading && (
+                <motion.h1 
+                  initial={{ opacity: 0, y: -25 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.1 }}
+                  className="font-serif text-3xl sm:text-4xl lg:text-[44px] font-medium text-[#103b2d] leading-[1.2] tracking-tight"
+                >
+                  {welcome.heading}
+                </motion.h1>
+              )}
 
               <div className="space-y-4 text-[16.5px] text-[#44524b] leading-relaxed">
-                <motion.p
-                  initial={{ opacity: 0, x: -35 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.65, delay: 0.2 }}
-                >
-                  At <strong className="font-semibold text-[#103b2d]">Adam to Muhammad Online Quran Academy</strong>, we believe that learning the Holy Quran is an important journey for every Muslim. Our aim is to make Quran learning easy, accessible and comfortable for students of all ages.
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, x: -35 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.65, delay: 0.35 }}
-                >
-                  We provide online one-to-one Quran classes for children and adults, allowing students to learn from the comfort of their homes.
-                </motion.p>
+                {welcomeParagraphs.map((para, idx) => (
+                  <motion.p
+                    key={idx}
+                    initial={{ opacity: 0, x: -35 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.65, delay: 0.2 + idx * 0.15 }}
+                  >
+                    {para}
+                  </motion.p>
+                ))}
               </div>
             </div>
 
             {/* Right Column: Authentic Quran Learning Image - Slide in from Right */}
-            <motion.div 
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.25, ease: 'easeOut' }}
-              className="lg:col-span-5"
-            >
-              <div className="relative rounded-2xl overflow-hidden border border-[#e4ded2] shadow-md aspect-[4/3] sm:aspect-[16/11]">
-                <img
-                  src="/images/student_home_learning.jpg"
-                  alt="Student learning the Holy Quran from home"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex items-end p-5">
-                  <p className="text-white text-xs sm:text-sm font-medium drop-shadow-sm">
-                    One-on-one live Quran classes from home
-                  </p>
+            {welcomeImageUrl && (
+              <motion.div 
+                initial={{ opacity: 0, x: 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.25, ease: 'easeOut' }}
+                className="lg:col-span-5"
+              >
+                <div className="relative rounded-2xl overflow-hidden border border-[#e4ded2] shadow-md aspect-[4/3] sm:aspect-[16/11]">
+                  <img
+                    src={welcomeImageUrl}
+                    alt="Student learning the Holy Quran from home"
+                    className="w-full h-full object-cover"
+                  />
+                  {welcome.imageCaption && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex items-end p-5">
+                      <p className="text-white text-xs sm:text-sm font-medium drop-shadow-sm">
+                        {welcome.imageCaption}
+                      </p>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* 2. Our Mission (Centered Green Card - Drops from Top with Glow) */}
+      {/* 2. Our Mission (Centered Green Card - Unchanged) */}
       <section className="py-16 sm:py-20 bg-white border-b border-[#ede7dc]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
@@ -240,11 +213,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenTrial, onNavigateHom
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
             {courses.map((course, idx) => {
-              const Icon = course.icon;
+              const Icon = getLucideIcon(course.iconName);
               return (
                 <motion.div
-                  key={course.title}
-                  initial={{ opacity: 0, x: idx < 2 ? -40 : 40 }}
+                  key={course._id || course.title}
+                  initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: (idx % 2) * 0.1, ease: 'easeOut' }}
@@ -361,11 +334,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenTrial, onNavigateHom
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {suitableFor.map((item, index) => {
-              const Icon = item.icon;
+              const Icon = getLucideIcon(item.iconName);
               return (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: index < 2 ? -40 : 40 }}
+                  key={item._id || index}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: (index % 2) * 0.1, ease: 'easeOut' }}
@@ -379,8 +352,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenTrial, onNavigateHom
                     <span className="text-xs font-mono font-bold text-[#b28338] block">
                       {item.num}
                     </span>
+                    {item.heading && (
+                      <h3 className="font-serif text-lg font-semibold text-[#103b2d] leading-snug">
+                        {item.heading}
+                      </h3>
+                    )}
                     <p className="text-[16px] font-medium text-[#2d3a33] leading-relaxed">
-                      {item.text}
+                      {item.description}
                     </p>
                   </div>
                 </motion.div>
